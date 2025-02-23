@@ -13,7 +13,7 @@ def generate_points(lower, upper):
 A = generate_points(0, 0.5)
 B = generate_points(0.5, 1)
 
-def plot_points():
+def plot_points(weight_sets):
     fig, ax = plt.subplots()
     ax.scatter(list(map(lambda x: x[0], A)), list(map(lambda x: x[1], A)), color="red", marker=".", label="Klasė A")
     ax.scatter(list(map(lambda x: x[0], B)), list(map(lambda x: x[1], B)), color="blue", marker=".", label="Klasė B")
@@ -21,6 +21,14 @@ def plot_points():
     ax.set_xlabel("x1")
     ax.set_ylabel("x2")
     ax.set_title("Tiesiškai atskiriamos klasės")
+
+    x_values = np.linspace(0.1, 0.9, 100)
+    i = 1
+    colors = ["green", "brown", "black"]
+    for weights in weight_sets:
+        y_values = - (weights[1] / weights[2]) * x_values - (weights[0] / weights[2])
+        ax.plot(x_values, y_values, linewidth=2, color=colors[i - 1], label=f"Skiriančioji tiesė {i}")
+        i += 1
 
     ax.legend()
     plt.show()
@@ -60,11 +68,18 @@ def find_valid_weights(activation):
     return weights
 
 # Find 3 sets of weights using threshold_activation
+random.seed(55)
 w11 = find_valid_weights(threshold_activation)
+random.seed(69)
 w12 = find_valid_weights(threshold_activation)
+random.seed(96)
 w13 = find_valid_weights(threshold_activation)
 
 # Find 3 sets of weights using sigmoid_activation
 w21 = find_valid_weights(sigmoid_activation)
 w22 = find_valid_weights(sigmoid_activation)
 w23 = find_valid_weights(sigmoid_activation)
+
+plot_points([w11, w12, w13])
+print(w11, w12, w13)
+print(w21, w22, w23)
