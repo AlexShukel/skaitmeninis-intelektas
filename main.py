@@ -20,7 +20,6 @@ def plot_points(weight_sets):
 
     ax.set_xlabel("x1")
     ax.set_ylabel("x2")
-    ax.set_title("Tiesiškai atskiriamos klasės")
 
     x_values = np.linspace(0.1, 0.9, 100)
     i = 1
@@ -28,6 +27,13 @@ def plot_points(weight_sets):
     for weights in weight_sets:
         y_values = - (weights[1] / weights[2]) * x_values - (weights[0] / weights[2])
         ax.plot(x_values, y_values, linewidth=2, color=colors[i - 1], label=f"Skiriančioji tiesė {i}")
+
+        # Calculating intersection between weights vector and decision boundary to move the vector on decision boundary
+        origin_x = - ((weights[0] * weights[1] * weights[2]) / (weights[2] * (pow(weights[1], 2) + pow(weights[2], 2))))
+        origin_y = - (weights[1] / weights[2]) * origin_x - (weights[0] / weights[2])
+
+        plt.quiver([origin_x], [origin_y], [weights[1] + origin_x], [weights[2] + origin_y], color=colors[i - 1], angles="xy", scale_units="xy", scale=10, width=0.005)
+
         i += 1
 
     ax.legend()
@@ -81,5 +87,6 @@ w22 = find_valid_weights(sigmoid_activation)
 w23 = find_valid_weights(sigmoid_activation)
 
 plot_points([w11, w12, w13])
+
 print(w11, w12, w13)
 print(w21, w22, w23)
