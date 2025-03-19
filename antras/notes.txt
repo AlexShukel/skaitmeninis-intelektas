@@ -1,0 +1,16 @@
+1. Rosenblatt perceptrono mokymo taisykle
+
+// Kiekvienam duomenu irasui i:
+if (t_i != y_i) {
+    // Visi svoriai atnaujinami pateikus viena duomenu irasa
+    w_k = w_k + niu * (t_i - y_i) * x_ik
+}
+
+2. Adaline mokymo taisykle
+
+Ta pati formule kaip Rosenblatt bet su gradientu
+
+3. Sigmoidinis neuronas
+
+Kiekvienam duomenu irasui i (stochastinis gradientinis nusileidimas):
+    w_k = w_k - niu * (y_i - t_i) * y_i * (1 - y_i) * x_ik
